@@ -43,18 +43,18 @@ var questions = [
     }
   ];
   
-var btnSend = document.querySelector('.send--answer');
+var btnNext = document.querySelector('.next--question');
 
 function printQuestion(){
-    var i = 0;
-    if (i < questions.length) {
-        console.log(questions[i].title);
-        for(let x = 0; x < questions[i].answers.length; x++){
-            console.log(questions[i].answers[x].answer);
-            }
-        i++;
-        }  
+    let i = 0;
+    document.querySelector('.question--title').innerHTML = questions[i].title;
+    for(let x = 0; x < questions[i].answers.length; x++){
+        document.querySelectorAll('[data-key]').innerHTML = questions[i].answers[x].answer;
     }
+    questions = questions.slice(1);
+}
 
-btnSend.addEventListener("click", printQuestion);
+
+
+btnNext.addEventListener("click", printQuestion);
 

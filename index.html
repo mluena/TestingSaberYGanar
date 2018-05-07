@@ -14,23 +14,24 @@
         <h2>Responde mejor y más rápido que los demás</h2>
     </header>
     <main>
-        <script src="../main.js"></script>
-    </main>
-    <footer>
+
         <div class="questions__container">
-            <h3 class="question--title">${}</h3>
-            <input type="checkbox" class="answer">answer1</input>
-            <input type="checkbox" class="answer">answer2</input>
-            <input type="checkbox" class="answer">answer3</input>
+            <h3 class="question--title"></h3>
+            <input type="radio" value ="1" data-key ="0" class="answer0">answer1</input>
+            <input type="radio" value ="2" data-key ="1" class="answer1">answer2</input>
+            <input type="radio" value ="3" data-key ="2"class="answer2">answer3</input>
             <div class="right--answer"></div>
             <button type="button" class="send--answer">Enviar respuesta</button>
-            <button type="button" class="nect--question">Siguiente pregunta</button>
+            <button type="button" class="next--question">Siguiente pregunta</button>
 
         </div>
         <div class="scores__container"></div>
         <div class="statistics__container"></div>
+    </main>
+    <footer>
+
     </footer>
-    
+    <script src="../main.js"></script>    
 </body>
 
 </html>
