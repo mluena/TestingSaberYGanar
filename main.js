@@ -49,7 +49,9 @@ function printQuestion(){
     let i = 0;
     document.querySelector('.question--title').innerHTML = questions[i].title;
     for(let x = 0; x < questions[i].answers.length; x++){
-        document.querySelectorAll('[data-key]').innerHTML = questions[i].answers[x].answer;
+        document.querySelector('.answer').innerHTML = 55;
+        console.log(document.querySelector('.answer'));
+        console.log(questions[0].answers[0].answer);
     }
     questions = questions.slice(1);
 }
