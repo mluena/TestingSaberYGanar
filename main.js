@@ -48,7 +48,7 @@ var btnNext = document.querySelector('.next--question');
 function printQuestion(){
     document.querySelector('.question--title').innerHTML = questions[0].title;
     for(let x = 0; x < questions[0].answers.length; x++){
-        document.querySelector('.answer'+ (x)).innerHTML += questions[0].answers[x].answer;
+        document.querySelector('.answer'+ (x)).innerHTML = '<input type="radio"/>' + questions[0].answers[x].answer;
     }
     questions = questions.slice(1);
 }
