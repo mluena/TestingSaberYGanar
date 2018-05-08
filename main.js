@@ -43,17 +43,27 @@ var questions = [
     }
   ];
   
-var btnNext = document.querySelector('.next--question');
+var btnNextQuestion = document.querySelector('.next__button');
+var btnCheckAnswer = document.querySelector('.send__button');
+
 
 function printQuestion(){
     document.querySelector('.question--title').innerHTML = questions[0].title;
     for(let x = 0; x < questions[0].answers.length; x++){
-        document.querySelector('.answer'+ (x)).innerHTML = '<input type="radio"/>' + questions[0].answers[x].answer;
+        let paragraph = document.querySelector('.answer'+ (x));
+        let answerValue = questions[0].answers[x].answer;
+        paragraph.innerHTML = `<input name="answer" type="radio" value="${answerValue}" class="input__answer checked"/>${answerValue}`;
+
     }
     questions = questions.slice(1);
+}
+function checkAnswer(){
+    let selectedAnswer = document.querySelector('.input__answer').value;
+ 
 }
 
 
 
-btnNext.addEventListener("click", printQuestion);
+btnNextQuestion.addEventListener("click", printQuestion);
+btnCheckAnswer.addEventListener("click", checkAnswer);
 
