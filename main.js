@@ -42,10 +42,7 @@ var questions = [
         correctAnswer: 'Guepardo'
     }
   ];
-
-let allAnswers = [];  
-let answerPosition = 0;
-let questionPosition = 0;
+let originalQuestions = questions;
 var btnNextQuestion = document.querySelector('.next__button');
 var btnCheckAnswer = document.querySelector('.send__button');
 
@@ -56,24 +53,29 @@ function printQuestion(){
         let paragraph = document.querySelector('.answer'+(x));
         let answerValue = questions[0].answers[x].answer;
         paragraph.innerHTML = `<input name="answer" type="radio" value="${answerValue}" class="input__answer"/>${answerValue}`;             
-    }   
+    } 
     questions = questions.slice(1); 
 }
 function checkSelectedAnswer(){
     let radios = document.querySelectorAll('.input__answer');
     for (let i = 0; i<radios.length; i++){
         if (radios[i].checked == true){
-            console.log(radios[i].value);
+            for(let x = 0; x<originalQuestions.length; x++){
+                if (radios[i].value == originalQuestions[x].correctAnswer){
+                    console.log('acierto');
+                }
+                else {
+                    console.log('fallo');
+                }
+            }    
         }
     }
+    printQuestion();
 }
-function checkCorrectAnswer(){
-    console.log(questions[0].answers[questionPosition].answer);
 
-}
 
 btnNextQuestion.addEventListener("click", checkSelectedAnswer);
-btnNextQuestion.addEventListener("click", printQuestion);
+
 
 
 
