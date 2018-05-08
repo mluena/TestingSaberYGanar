@@ -9,7 +9,7 @@ var questions = [
             { id: 2, answer: '33' },
             { id: 3, answer: '37' }
         ],
-        correctAnswer: { id: 2 }
+        correctAnswer: '33'
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ var questions = [
             { id: 2, answer: 'Harare' },
             { id: 3, answer: 'Madrid' }
         ],
-        correctAnswer: { id: 1 }
+        correctAnswer: 'Lusaka'
     },
     {
         id: 3,
@@ -29,7 +29,7 @@ var questions = [
             { id: 2, answer: 'Sefarad' },
             { id: 3, answer: 'Sigmund' }
         ],
-        correctAnswer: { id: 3 }
+        correctAnswer: 'Sigmund'
     },
     {
         id: 4,
@@ -39,10 +39,13 @@ var questions = [
             { id: 2, answer: 'León' },
             { id: 3, answer: 'Tortuga' }
         ],
-        correctAnswer: { id: 1 }
+        correctAnswer: 'Guepardo'
     }
   ];
-  
+
+let allAnswers = [];  
+let answerPosition = 0;
+let questionPosition = 0;
 var btnNextQuestion = document.querySelector('.next__button');
 var btnCheckAnswer = document.querySelector('.send__button');
 
@@ -50,20 +53,28 @@ var btnCheckAnswer = document.querySelector('.send__button');
 function printQuestion(){
     document.querySelector('.question--title').innerHTML = questions[0].title;
     for(let x = 0; x < questions[0].answers.length; x++){
-        let paragraph = document.querySelector('.answer'+ (x));
+        let paragraph = document.querySelector('.answer'+(x));
         let answerValue = questions[0].answers[x].answer;
-        paragraph.innerHTML = `<input name="answer" type="radio" value="${answerValue}" class="input__answer checked"/>${answerValue}`;
-
+        paragraph.innerHTML = `<input name="answer" type="radio" value="${answerValue}" class="input__answer"/>${answerValue}`;             
+    }   
+    questions = questions.slice(1); 
+}
+function checkSelectedAnswer(){
+    let radios = document.querySelectorAll('.input__answer');
+    for (let i = 0; i<radios.length; i++){
+        if (radios[i].checked == true){
+            console.log(radios[i].value);
+        }
     }
-    questions = questions.slice(1);
 }
-function checkAnswer(){
-    let selectedAnswer = document.querySelector('.input__answer').value;
- 
+function checkCorrectAnswer(){
+    console.log(questions[0].answers[questionPosition].answer);
+
 }
 
-
-
+btnNextQuestion.addEventListener("click", checkSelectedAnswer);
 btnNextQuestion.addEventListener("click", printQuestion);
-btnCheckAnswer.addEventListener("click", checkAnswer);
+
+
+
 
