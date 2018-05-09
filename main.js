@@ -48,7 +48,7 @@ var btnCheckAnswer = document.querySelector('.send__button');
 
 
 function printQuestion(){
-    document.querySelector('.question--title').innerHTML = questions[0].title;
+    document.querySelector('.questions__container').insertAdjacentHTML('beforebegin', `<h3 class="question__title">${questions[0].title}</h3>`);
     for(let x = 0; x < questions[0].answers.length; x++){
         let paragraph = document.querySelector('.answer'+(x));
         let answerValue = questions[0].answers[x].answer;
@@ -63,6 +63,7 @@ function checkSelectedAnswer(){
             for(let x = 0; x<originalQuestions.length; x++){
                 if (radios[i].value == originalQuestions[x].correctAnswer){
                     console.log('acierto');
+                    document.querySelector('.answerResult__container').innerHTML = originalQuestions[x].correctAnswer;
                 }
                 else {
                     console.log('fallo');
@@ -72,6 +73,21 @@ function checkSelectedAnswer(){
     }
     printQuestion();
 }
+
+// let radios = document.querySelectorAll('.input__class');
+// let questionTitleID =  document.querySelector('.question__class').id;
+// console.log(questionTitleID);
+// for (let i = 0; i < radios.length; i++){
+//   if (radios[i].checked){
+//     let selectedAnswerID = radios[i].id;
+//     console.log(selectedAnswerID);
+//     if(selectedAnswerID === questionTitleID){
+//       console.log('bien');
+//     }
+//   }
+
+// }
+// }
 
 
 btnNextQuestion.addEventListener("click", checkSelectedAnswer);
