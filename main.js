@@ -82,15 +82,19 @@ function checkSelectedAnswer(){
             let selectedAnswerID = radios[i].id;
             if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
                 console.log('bien');
+                document.querySelector('.answerResult__container').innerHTML = 'Correcto!';
+                recalculateCorrectAnswer(time,score);
             }
             else{
                 console.log('mal');
+                document.querySelector('.answerResult__container').innerHTML = 'Fallaste!';
+                recalcularFallandoPregunta(time,score);
             } 
         }          
     }
 }
 
-function recalculateCorrectAnswer(time, score) {
+function recalculateCorrectAnswer() {
     if (time <= 2) {
         return score + 2;
     }
@@ -100,7 +104,19 @@ function recalculateCorrectAnswer(time, score) {
     if (time > 10) {
         return score;
     }
+    document.querySelector('.scores__container').innerHTML = score;
+
 }
+function recalcularFallandoPregunta() {
+    if (time <= 10) {
+      return score - 1;
+    }
+    if (time > 10) {
+      return score - 2;
+    }
+    document.querySelector('.scores__container').innerHTML = score;
+  }
+
 
 btnStartGame.addEventListener("click", onStart);
 btnNextQuestion.addEventListener("click", onNextQuestion);
