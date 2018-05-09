@@ -2,95 +2,110 @@
 
 var questions = [
     {
-        id: 1,
+        id: 0,
         title: '¿Cuántos años tiene María?',
         answers: [
             { id: 1, answer: '25' },
             { id: 2, answer: '33' },
             { id: 3, answer: '37' }
         ],
-        correctAnswer: '33'
+        correctAnswer: 2
     },
     {
-        id: 2,
+        id: 1,
         title: '¿Cuál es la capital de Zambia?',
         answers: [
             { id: 1, answer: 'Lusaka' },
             { id: 2, answer: 'Harare' },
             { id: 3, answer: 'Madrid' }
         ],
-        correctAnswer: 'Lusaka'
+        correctAnswer: 1
     },
     {
-        id: 3,
+        id: 2,
         title: '¿Cuál es el nombre completo de Freud?',
         answers: [
             { id: 1, answer: 'Adolf' },
             { id: 2, answer: 'Sefarad' },
             { id: 3, answer: 'Sigmund' }
         ],
-        correctAnswer: 'Sigmund'
+        correctAnswer: 3
     },
     {
-        id: 4,
+        id: 3,
         title: '¿Cuál es el animal más rápido del mundo?',
         answers: [
             { id: 1, answer: 'Guepardo' },
             { id: 2, answer: 'León' },
             { id: 3, answer: 'Tortuga' }
         ],
-        correctAnswer: 'Guepardo'
+        correctAnswer: 1
     }
   ];
 let originalQuestions = questions;
+let score = 0;
+let time = 0;
+var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
-var btnCheckAnswer = document.querySelector('.send__button');
 
 
 function printQuestion(){
-    document.querySelector('.questions__container').insertAdjacentHTML('beforebegin', `<h3 class="question__title">${questions[0].title}</h3>`);
-    for(let x = 0; x < questions[0].answers.length; x++){
-        let paragraph = document.querySelector('.answer'+(x));
-        let answerValue = questions[0].answers[x].answer;
-        paragraph.innerHTML = `<input name="answer" type="radio" value="${answerValue}" class="input__answer"/>${answerValue}`;             
-    } 
+    let questionsPosition = document.querySelector('.questions__container');
+    if (questions.length>0){
+        questionsPosition.innerHTML = (`<h3 class="question__title" id=${questions[0].id}>${questions[0].title}</h3>`);
+        for (const answers of questions[0].answers) {
+            let answerValue = answers.answer;
+            let answerID = answers.id;
+            questionsPosition.innerHTML += 
+                `<label for="${answerID}">${answerValue}</label>
+                <input id="${answerID}" type="radio" value="${answerValue}" name="answerOption" class="input__answer" />`    
+          }
+    }
     questions = questions.slice(1); 
+}
+function onNextQuestion(){
+    checkSelectedAnswer();
+    printQuestion();
+}
+function onStart(){
+    printQuestion();
 }
 function checkSelectedAnswer(){
     let radios = document.querySelectorAll('.input__answer');
-    for (let i = 0; i<radios.length; i++){
-        if (radios[i].checked == true){
-            for(let x = 0; x<originalQuestions.length; x++){
-                if (radios[i].value == originalQuestions[x].correctAnswer){
-                    console.log('acierto');
-                    document.querySelector('.answerResult__container').innerHTML = originalQuestions[x].correctAnswer;
-                }
-                else {
-                    console.log('fallo');
-                }
-            }    
-        }
+    let questionID = document.querySelector('.question__title').id;
+    let currentQuestion = originalQuestions.find(function(originalQuestion){
+       // let currectAnswer = originalQuestions[questionID].correctAnswer;
+        return (questionID == originalQuestion.id);
+    });
+    console.log('linea 74', questionID);
+    for (let i = 0; i < radios.length; i++){
+        if (radios[i].checked){
+            let selectedAnswerID = radios[i].id;
+            console.log('dentro if radios linea 78',selectedAnswerID);
+            if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
+                console.log('bien');
+            }
+            else{
+                console.log('mal');
+            } 
+        }          
     }
-    printQuestion();
 }
 
-// let radios = document.querySelectorAll('.input__class');
-// let questionTitleID =  document.querySelector('.question__class').id;
-// console.log(questionTitleID);
-// for (let i = 0; i < radios.length; i++){
-//   if (radios[i].checked){
-//     let selectedAnswerID = radios[i].id;
-//     console.log(selectedAnswerID);
-//     if(selectedAnswerID === questionTitleID){
-//       console.log('bien');
-//     }
-//   }
+function recalculateCorrectAnswer(time, score) {
+    if (time <= 2) {
+        return score + 2;
+    }
+    if (time > 2 && time <= 10) {
+        return score + 1;
+    }
+    if (time > 10) {
+        return score;
+    }
+}
 
-// }
-// }
-
-
-btnNextQuestion.addEventListener("click", checkSelectedAnswer);
+btnStartGame.addEventListener("click", onStart);
+btnNextQuestion.addEventListener("click", onNextQuestion);
 
 
 
