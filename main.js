@@ -44,7 +44,7 @@ var questions = [
   ];
 let originalQuestions = questions;
 let score = 0;
-let time = 0;
+let time = 20;
 let timeOut = '';
 var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
@@ -65,10 +65,12 @@ function printQuestion(){
     questions = questions.slice(1); 
 }
 function onNextQuestion(){
+    startTime();
     checkSelectedAnswer();
     printQuestion();
 }
 function onStart(){
+    btnStartGame.classList.add('invisible');
     startTime();
     printQuestion();
 }
@@ -90,7 +92,7 @@ function checkSelectedAnswer(){
             else{
                 console.log('mal');
                 document.querySelector('.answerResult__container').innerHTML = 'Fallaste!';
-       //         recalcularFallandoPregunta(time,score);
+                recalculateWrongAnswer();
             } 
         }          
     }
@@ -99,39 +101,40 @@ function checkSelectedAnswer(){
 function recalculateCorrectAnswer() {
     if (time <= 2) {
         score = score + 2;
-        console.log(score);
-        document.querySelector('.scores__container').innerHTML = score;
-        return score;
     }
     if (time > 2 && time <= 10) {
-        return score + 1;
+        score = score + 1;
     }
     if (time > 10) {
-        return score;
+        score = score;
     }
     document.querySelector('.scores__container').innerHTML = score;
-    console.log("imprime" + score)
+    return score;
 }
-function recalcularFallandoPregunta(){
+function recalculateWrongAnswer(){
     if (time <= 10) {
-      return score - 1;
+        console.log('previamente' + score)
+        score = score - 1;
+        console.log('después de operar' + score)
     }
     if (time > 10) {
-      return score - 2;
+        console.log('previamente' + score)
+        score = score - 2;
+        console.log('después de operar' + score)
     }
-  //  document.querySelector('.scores__container').innerHTML = score;
+    document.querySelector('.scores__container').innerHTML = score;
+    return score;
 }
 function startTime(){
     function timeControl(){
-        if (time<5){
-            time+=1;
+        if (time>0){
+            time-=1;
             document.querySelector('.time__container').innerHTML = time;
         }
         else {
-            time = 0;
+            time = 20;
             printQuestion();
-        }
-
+        }          
     }
     setInterval(timeControl,1000);
 }
