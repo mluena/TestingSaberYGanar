@@ -44,8 +44,9 @@ var questions = [
   ];
 let originalQuestions = questions;
 let score = 0;
-let time = 20;
+let time = 21;
 let timeOut = '';
+var dataSection = document.querySelector('.data__container');
 var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
 
@@ -65,12 +66,13 @@ function printQuestion(){
     questions = questions.slice(1); 
 }
 function onNextQuestion(){
-    startTime();
+    time = 21;
     checkSelectedAnswer();
     printQuestion();
 }
 function onStart(){
     btnStartGame.classList.add('invisible');
+    dataSection.classList.remove('invisible');
     startTime();
     printQuestion();
 }
@@ -132,7 +134,7 @@ function startTime(){
             document.querySelector('.time__container').innerHTML = time;
         }
         else {
-            time = 20;
+            time = 21;
             printQuestion();
         }          
     }
