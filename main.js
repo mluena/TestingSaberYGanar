@@ -44,7 +44,8 @@ var questions = [
   ];
 let originalQuestions = questions;
 let score = 0;
-let time = 0;
+let initialTime = -1;
+let timeOut = 0;
 var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
 
@@ -61,6 +62,7 @@ function printQuestion(){
                 <input id="${answerID}" type="radio" value="${answerValue}" name="answerOption" class="input__answer" />`    
           }
     }
+    initialTime = -1;
     questions = questions.slice(1); 
 }
 function onNextQuestion(){
@@ -68,6 +70,7 @@ function onNextQuestion(){
     printQuestion();
 }
 function onStart(){
+    timeControl();
     printQuestion();
 }
 function checkSelectedAnswer(){
@@ -83,12 +86,12 @@ function checkSelectedAnswer(){
             if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
                 console.log('bien');
                 document.querySelector('.answerResult__container').innerHTML = 'Correcto!';
-                recalculateCorrectAnswer(time,score);
+        //        recalculateCorrectAnswer(time,score);
             }
             else{
                 console.log('mal');
                 document.querySelector('.answerResult__container').innerHTML = 'Fallaste!';
-                recalcularFallandoPregunta(time,score);
+       //         recalcularFallandoPregunta(time,score);
             } 
         }          
     }
@@ -104,8 +107,7 @@ function recalculateCorrectAnswer() {
     if (time > 10) {
         return score;
     }
-    document.querySelector('.scores__container').innerHTML = score;
-
+  //  document.querySelector('.scores__container').innerHTML = score;
 }
 function recalcularFallandoPregunta() {
     if (time <= 10) {
@@ -114,10 +116,20 @@ function recalcularFallandoPregunta() {
     if (time > 10) {
       return score - 2;
     }
-    document.querySelector('.scores__container').innerHTML = score;
+  //  document.querySelector('.scores__container').innerHTML = score;
   }
 
+  function timeControl()
+  {
+      initialTime++;
+      document.querySelector('.time__container').innerHTML = initialTime;
+      let timeOut = setTimeout("timeControl()",1000);
+  }
 
+  /* Funcion que pone un 0 delante de un valor si es necesario */
+  function LeadingZero(Time) {
+      return Time;
+  }
 btnStartGame.addEventListener("click", onStart);
 btnNextQuestion.addEventListener("click", onNextQuestion);
 
