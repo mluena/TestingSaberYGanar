@@ -74,14 +74,12 @@ function checkSelectedAnswer(){
     let radios = document.querySelectorAll('.input__answer');
     let questionID = document.querySelector('.question__title').id;
     let currentQuestion = originalQuestions.find(function(originalQuestion){
-       // let currectAnswer = originalQuestions[questionID].correctAnswer;
         return (questionID == originalQuestion.id);
     });
     console.log('linea 74', questionID);
     for (let i = 0; i < radios.length; i++){
         if (radios[i].checked){
             let selectedAnswerID = radios[i].id;
-            console.log('dentro if radios linea 78',selectedAnswerID);
             if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
                 console.log('bien');
             }
