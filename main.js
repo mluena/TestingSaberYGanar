@@ -44,7 +44,7 @@ var questions = [
   ];
 let originalQuestions = questions;
 let score = 0;
-let time = -1;
+let time = 0;
 let timeOut = '';
 var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
@@ -85,7 +85,7 @@ function checkSelectedAnswer(){
             if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
                 console.log('bien');
                 document.querySelector('.answerResult__container').innerHTML = 'Correcto!';
-                recalculateCorrectAnswer(time);
+                recalculateCorrectAnswer();
             }
             else{
                 console.log('mal');
@@ -98,7 +98,10 @@ function checkSelectedAnswer(){
 
 function recalculateCorrectAnswer() {
     if (time <= 2) {
-        return score + 2;
+        score = score + 2;
+        console.log(score);
+        document.querySelector('.scores__container').innerHTML = score;
+        return score;
     }
     if (time > 2 && time <= 10) {
         return score + 1;
@@ -107,6 +110,7 @@ function recalculateCorrectAnswer() {
         return score;
     }
     document.querySelector('.scores__container').innerHTML = score;
+    console.log("imprime" + score)
 }
 function recalcularFallandoPregunta(){
     if (time <= 10) {
@@ -116,7 +120,7 @@ function recalcularFallandoPregunta(){
       return score - 2;
     }
   //  document.querySelector('.scores__container').innerHTML = score;
-  }
+}
 function startTime(){
     function timeControl(){
         if (time<5){
@@ -124,12 +128,12 @@ function startTime(){
             document.querySelector('.time__container').innerHTML = time;
         }
         else {
-            time = -1;
+            time = 0;
             printQuestion();
         }
 
     }
-    setTimeout(timeControl,1000);
+    setInterval(timeControl,1000);
 }
 
 btnStartGame.addEventListener("click", onStart);
