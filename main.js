@@ -71,8 +71,9 @@ function onStart(){
 
 function onNextQuestion(){
     time = 21;
-    checkSelectedAnswer();
     printQuestion();
+
+   // checkSelectedAnswer();
 }
 
 //
@@ -91,6 +92,7 @@ function printQuestion(){
                 <input id="${answerID}" type="radio" value="${answerValue}" name="answerOption" class="input__answer" />`    
           }
     }
+    checkSelectedAnswer();
     enableBtnNextQuestion();
     questions = questions.slice(1); 
 }
@@ -100,15 +102,12 @@ function printQuestion(){
 
 function enableBtnNextQuestion(){
     function enableChecked(){
-        radios = document.querySelectorAll('.input__answer');
-        for (let i = 0; i < radios.length; i++){
-            console.log('dentro del for para check');
-            if ((radios[i].checked)||(radios[i+1].checked)||(radios[i+2].checked)){
-                btnNextQuestion.disabled = false;
-            }   
-            else{
-                btnNextQuestion.disabled = true;
-            }
+        let radios = document.querySelectorAll('.input__answer');
+        if ((radios[0].checked)||(radios[1].checked)||(radios[2].checked)){
+            btnNextQuestion.disabled = false;
+        }   
+        else{
+            btnNextQuestion.disabled = true;
         }
     }
     setInterval(enableChecked,1000);
@@ -124,7 +123,7 @@ function checkSelectedAnswer(){
     });
     console.log('linea 74', questionID);
     for (let i = 0; i < radios.length; i++){
-        if (radios[i].checked){
+        if ((radios[i].checked)||(radios[i+1].checked)||(radios[i+2].checked)){
             let selectedAnswerID = radios[i].id;
             if(Number(selectedAnswerID) === currentQuestion.correctAnswer){
                 console.log('bien');
