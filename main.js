@@ -1,5 +1,7 @@
 'use strict';
 
+// Array Questions
+
 var questions = [
     {
         id: 0,
@@ -41,17 +43,43 @@ var questions = [
         ],
         correctAnswer: 1
     }
-  ];
+];
+
+// Global variables
+
 let originalQuestions = questions;
 let score = 0;
 let time = 21;
 let timeOut = '';
+let radios = document.querySelectorAll('.input__answer');
 var dataSection = document.querySelector('.data__container');
 var btnStartGame = document.getElementById('start__button');
 var btnNextQuestion = document.querySelector('.next__button');
 
+//Function to start the game
+
+function onStart(){
+    btnStartGame.classList.add('invisible');
+    dataSection.classList.remove('invisible');
+    btnNextQuestion.classList.remove('invisible');
+    startTime();
+    printQuestion();
+}
+
+//
+// Function to go to checkquestion, print next one and restart time
+
+function onNextQuestion(){
+    time = 21;
+    checkSelectedAnswer();
+    printQuestion();
+}
+
+//
+// Function to print questions and answers
 
 function printQuestion(){
+    var btnNextQuestion = document.querySelector('.next__button').disabled = true;
     let questionsPosition = document.querySelector('.questions__container');
     if (questions.length>0){
         questionsPosition.innerHTML = (`<h3 class="question__title" id=${questions[0].id}>${questions[0].title}</h3>`);
@@ -63,21 +91,33 @@ function printQuestion(){
                 <input id="${answerID}" type="radio" value="${answerValue}" name="answerOption" class="input__answer" />`    
           }
     }
+    enableBtnNextQuestion();
     questions = questions.slice(1); 
 }
-function onNextQuestion(){
-    time = 21;
-    checkSelectedAnswer();
-    printQuestion();
+
+//
+//Check if radio buttons are selected to enabled/disabled next question button
+
+function enableBtnNextQuestion(){
+    function enableChecked(){
+        radios = document.querySelectorAll('.input__answer');
+        for (let i = 0; i < radios.length; i++){
+            console.log('dentro del for para check');
+            if ((radios[i].checked)||(radios[i+1].checked)||(radios[i+2].checked)){
+                btnNextQuestion.disabled = false;
+            }   
+            else{
+                btnNextQuestion.disabled = true;
+            }
+        }
+    }
+    setInterval(enableChecked,1000);
 }
-function onStart(){
-    btnStartGame.classList.add('invisible');
-    dataSection.classList.remove('invisible');
-    startTime();
-    printQuestion();
-}
+
+// 
+//Check if user selected answer iscorrect
+
 function checkSelectedAnswer(){
-    let radios = document.querySelectorAll('.input__answer');
     let questionID = document.querySelector('.question__title').id;
     let currentQuestion = originalQuestions.find(function(originalQuestion){
         return (questionID == originalQuestion.id);
@@ -100,11 +140,15 @@ function checkSelectedAnswer(){
     }
 }
 
+//
+// CALCULATING SCORE
+// Recalcute score if user's answer is correct
+
 function recalculateCorrectAnswer() {
-    if (time <= 2) {
+    if (time <= 18) {
         score = score + 2;
     }
-    if (time > 2 && time <= 10) {
+    if (time > 18 && time <= 10) {
         score = score + 1;
     }
     if (time > 10) {
@@ -113,6 +157,9 @@ function recalculateCorrectAnswer() {
     document.querySelector('.scores__container').innerHTML = score;
     return score;
 }
+
+// Recalcute score if user's answer is wrong
+
 function recalculateWrongAnswer(){
     if (time <= 10) {
         console.log('previamente' + score)
@@ -127,6 +174,10 @@ function recalculateWrongAnswer(){
     document.querySelector('.scores__container').innerHTML = score;
     return score;
 }
+
+//
+// Function to keep track of time
+
 function startTime(){
     function timeControl(){
         if (time>0){
@@ -140,6 +191,8 @@ function startTime(){
     }
     setInterval(timeControl,1000);
 }
+
+//
 
 btnStartGame.addEventListener("click", onStart);
 btnNextQuestion.addEventListener("click", onNextQuestion);
