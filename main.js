@@ -92,16 +92,7 @@ function printQuestion(){
         }
     } 
     if (questions.length == 0) {
-        let btnNextQuestion = document.querySelector('.next__button');
-        btnNextQuestion.classList.add('invisible');
-        var questionsSection = document.querySelector('.questionsAnswers');
-        questionsSection.classList.add('invisible');
-        var historicSection = document.querySelector('.historic');
-        historicSection.classList.remove('invisible');
-        var dataSection = document.querySelector('.data__container');
-        dataSection.classList.add('invisible');
-        var user = document.querySelector('.user__name');
-        user.classList.remove('invisible');
+        setScores();
     } 
     enableBtnNextQuestion();
     questions = questions.slice(1);
@@ -128,9 +119,9 @@ function enableBtnNextQuestion() {
 //Check if user selected answer iscorrect
 
 function checkSelectedAnswer(){
-    let radios = document.querySelectorAll('.input__answer');
-    let questionID = document.querySelector('.question__title').id;
-    let currentQuestion = originalQuestions.find(function(originalQuestion){
+    var radios = document.querySelectorAll('.input__answer');
+    var questionID = document.querySelector('.question__title').id;
+    var currentQuestion = originalQuestions.find(function(originalQuestion){
         return (questionID == originalQuestion.id);
     });
     for (let i = 0; i < radios.length; i++){
@@ -199,20 +190,40 @@ function startTime(){
 
 //
 
-function checkStatistics(){
-    let user = document.querySelector('.user__name');
+ function setScores(){
+    var btnNextQuestion = document.querySelector('.next__button');
+    btnNextQuestion.classList.add('invisible');
+    var questionsSection = document.querySelector('.questionsAnswers');
+    questionsSection.classList.add('invisible');
+    var dataSection = document.querySelector('.data__container');
+    dataSection.classList.add('invisible');
+    var userInfo = document.querySelector('.user__info');
+    userInfo.classList.remove('invisible');
+
+    var dataSection = document.querySelector('.data__container');
+    dataSection.classList.add('invisible');
+    var user = document.querySelector('.user__info');
     user.classList.remove('invisible');
     var dataSection = document.querySelector('.data__container');
     dataSection.classList.add('invisible');
-    let userName = document.querySelector('.user__name').value;
-    user.classList.add('invisible');
+    var userName = document.querySelector('.user__name').value;
+    userName.classList.add('invisible');
+    var historicSection = document.querySelector('.historic');
+    historicSection.classList.remove('invisible');
+    if (userName != ''){
+        printUserInfo();
+    }
+ }
+ function printUserInfo() {
+    var btnAddUserName = document.querySelector('.addUser');
     var usersList = document.querySelector('.usersList');
     var content = '<li placeholder="Introduce tu nombre">' + userName + ': ' + score + '</li>';
-    usersList.innerHTML += content; 
-}
+    usersList.innerHTML += content;
+    btnAddUserName.addEventListener("click", printUserInfo);
 
+ }
 
 btnStartGame.addEventListener("click", onStart);
 btnNextQuestion.addEventListener("click", onNextQuestion);
-btnNewGame.addEventListener("click", checkStatistics);
+btnNewGame.addEventListener("click", onStart);
 
