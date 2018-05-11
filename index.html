@@ -10,29 +10,36 @@
 </head>
 
 <body>
-    <header>
-        <h1>Saber y ganar</h1>
-        <h2>Responde mejor y más rápido que los demás</h2>
-    </header>
-    <main>
-        <div class="questions__container">
-        </div>
-        <div class="answerResult__container"></div>
-        <button type="button" id="start__button">Comienza el juego</button>
-        <button type="button" class="next__button invisible">Siguiente pregunta</button>
-        <section class="data__container invisible">        
-            <h4 class="time__title">Tiempo restante de pregunta</h4>
-            <div class="time__container"></div>
-            <h4 class="scores__title">Marcador</h4>
-            <div class="scores__container"></div>
-            <h4 class="statistics__title">Estadísticas</h4>
-            <div class="statistics__container"></div>            
-        </section>
-    </main>
-    <footer>
-
-    </footer>
-    <script src="../main.js"></script>    
+    <div class="main__container">
+        <header class="header__container">
+            <h1 class="title">Saber y ganar</h1>            
+            <h2 class="title">Responde mejor y más rápido que los demás</h2>
+        </header>
+        <main>
+            <section class="questionsAnswers">
+                <div class="questions__container"></div>
+                <div class="answerResult__container"></div>
+            </section>
+            <button type="button" id="start__button">Comienza el juego</button>
+            <button type="button" class="next__button invisible">Siguiente pregunta</button>
+            <section class="data__container invisible">        
+                <h4 class="time__title">Tiempo restante de pregunta</h4>
+                <div class="time__container"></div>
+                <h4 class="scores__title">Marcador</h4>
+                <div class="scores__container"></div>
+            </section>
+            <section class="historic invisible">
+                <h4 class="statistics__title">Puntuación general</h4>
+                <input placeholder="Introduce tu nombre" type="text" class="user__name invisible"/>
+                <ul class="usersList"></ul> 
+                <button class="startNewGame">New</button>           
+            </section>
+        </main>
+        <footer class="footer">
+                
+        </footer>
+    </div>
+    <script src="../main.js"></script> 
 </body>
 
 </html>
